@@ -14,7 +14,6 @@ passport.use(
   new JwtStrategy(options, async (payload, done) => {
     try {
       const user = await userRepository.findOne({
-        attributes: ['userId', 'username'],
         where: { userId: payload.userId },
       });
       return done(null, user);

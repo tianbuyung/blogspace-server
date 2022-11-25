@@ -101,8 +101,6 @@ class AuthService {
       const token = jwt.sign(
         {
           userId: isUserFound.userId,
-          username: isUserFound.username,
-          email: isUserFound.email,
         },
         secretKey,
         { expiresIn: 60 * 60 },

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.UserTodoLists.belongsTo(models.Users, {
-        foreignKey: 'user_id',
+        foreignKey: 'userId',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       });
