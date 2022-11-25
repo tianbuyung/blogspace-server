@@ -14,14 +14,68 @@ module.exports = (sequelize, DataTypes) => {
   }
   users.init(
     {
-      user_id: DataTypes.UUID,
-      username: DataTypes.STRING,
-      password: DataTypes.STRING,
-      deleted_at: DataTypes.DATE,
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+        unique: true,
+      },
+      userId: {
+        allowNull: false,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        unique: true,
+        field: 'user_id',
+      },
+      username: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        notNull: {
+          msg: 'Please enter your username',
+        },
+        unique: true,
+      },
+      email: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        notNull: {
+          msg: 'Please enter your email',
+        },
+        validate: {
+          isEmail: true,
+        },
+        unique: true,
+      },
+      password: {
+        allowNull: false,
+        type: DataTypes.STRING(60),
+        notNull: {
+          msg: 'Please enter your password',
+        },
+        validate: {
+          is: /^\$2[ayb]\$.{56}$/i,
+        },
+      },
+      deletedAt: {
+        type: DataTypes.DATE,
+        field: 'deleted_at',
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: new Date().getTime(),
+        field: 'created_at',
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: new Date().getTime(),
+        field: 'updated_at',
+      },
     },
     {
       sequelize,
-      modelName: 'users',
+      modelName: 'Users',
+      tableName: 'users',
       paranoid: true,
     },
   );

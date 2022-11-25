@@ -9,22 +9,48 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       user_id: {
+        allowNull: false,
         type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        unique: true,
       },
       username: {
+        allowNull: false,
         type: Sequelize.STRING,
+        notNull: {
+          msg: 'Please enter your username',
+        },
+        unique: true,
+      },
+      email: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        notNull: {
+          msg: 'Please enter your email',
+        },
+        validate: {
+          isEmail: true,
+        },
+        unique: true,
       },
       password: {
-        type: Sequelize.STRING,
+        allowNull: false,
+        type: Sequelize.STRING(60),
+        notNull: {
+          msg: 'Please enter your password',
+        },
+        validate: {
+          is: /^\$2[ayb]\$.{56}$/i,
+        },
       },
       deleted_at: {
         type: Sequelize.DATE,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },

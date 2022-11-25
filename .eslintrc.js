@@ -12,5 +12,7 @@ module.exports = {
   ignorePatterns: ['bin/*'],
   rules: {
     'max-len': [2, 100],
+    'class-methods-use-this': 0,
+    'object-curly-newline': 0,
   },
 };
