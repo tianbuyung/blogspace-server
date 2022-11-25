@@ -1,15 +1,21 @@
 const encrypt = require('bcryptjs');
 const validator = require('validator');
-
+const jwt = require('jsonwebtoken');
 const UserRepository = require('../repositories/userRepository');
 
 const userRepository = new UserRepository();
+const secretKey = process.env.JWT_SECRET_KEY || 'Secret_Key';
 
 class AuthService {
   async #encrypt(password, saltRounds) {
     const salt = await encrypt.genSalt(saltRounds);
     const hashedPassword = await encrypt.hash(password, salt);
     return hashedPassword;
+  }
+
+  async #checkPassword(userPassword, dbPassword) {
+    const checkedPassword = await encrypt.compare(userPassword, dbPassword);
+    return checkedPassword;
   }
 
   async userRegister(payload) {
@@ -63,6 +69,51 @@ class AuthService {
     };
     const result = await userRepository.findOrCreate(options);
     return result;
+  }
+
+  async userLogin(payload) {
+    let error = null;
+    const { username, password } = payload;
+    if (!username || !password) {
+      error = 'Password/Username does not empty';
+      return [error, null];
+    }
+    const options = {
+      attributes: ['userId', 'username', 'email', 'password'],
+      where: { username },
+    };
+    // eslint-disable-next-line prefer-const
+    let [errorIsUserNotFound, isUserFound] = await userRepository.findOne(options);
+    if (errorIsUserNotFound) {
+      return [errorIsUserNotFound, null];
+    }
+    if (isUserFound) {
+      const dbPassword = isUserFound.password;
+      const isTruePassword = await this.#checkPassword(password, dbPassword);
+      if (!isTruePassword) {
+        error = {
+          message: 'Password does not match',
+        };
+        return [error, null];
+      }
+    }
+    try {
+      const token = jwt.sign(
+        {
+          userId: isUserFound.userId,
+          username: isUserFound.username,
+          email: isUserFound.email,
+        },
+        secretKey,
+        { expiresIn: 60 * 60 },
+      );
+      return [error, token];
+    } catch (errorJWT) {
+      errorIsUserNotFound = {
+        message: 'Create JWT token is failed',
+      };
+      return [errorJWT, null];
+    }
   }
 }
 

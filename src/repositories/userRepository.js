@@ -25,6 +25,25 @@ class UserRepository {
       return [err, null];
     }
   }
+
+  async findOne(options) {
+    let err = null;
+    try {
+      const data = await Users.findOne(options);
+      if (data) {
+        return [err, data];
+      }
+      err = {
+        message: 'The user is not found',
+      };
+      return [err, null];
+    } catch (error) {
+      err = {
+        message: error.message,
+      };
+      return [err, null];
+    }
+  }
 }
 
 module.exports = UserRepository;
