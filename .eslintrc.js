@@ -10,5 +10,7 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   ignorePatterns: ['bin/*'],
-  rules: {},
+  rules: {
+    'max-len': [2, 100],
+  },
 };
