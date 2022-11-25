@@ -1,7 +1,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Users extends Model {
+  class UserTodoLists extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,14 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Users.hasMany(models.UserTodoLists, {
+      models.UserTodoLists.belongsTo(models.Users, {
         foreignKey: 'user_id',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       });
     }
   }
-  Users.init(
+  UserTodoLists.init(
     {
       id: {
         allowNull: false,
@@ -28,38 +28,12 @@ module.exports = (sequelize, DataTypes) => {
       userId: {
         allowNull: false,
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         unique: true,
         field: 'user_id',
       },
-      username: {
+      todo: {
         allowNull: false,
-        type: DataTypes.STRING,
-        notNull: {
-          msg: 'Please enter your username',
-        },
-        unique: true,
-      },
-      email: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        notNull: {
-          msg: 'Please enter your email',
-        },
-        validate: {
-          isEmail: true,
-        },
-        unique: true,
-      },
-      password: {
-        allowNull: false,
-        type: DataTypes.STRING(60),
-        notNull: {
-          msg: 'Please enter your password',
-        },
-        validate: {
-          is: /^\$2[ayb]\$.{56}$/i,
-        },
+        type: DataTypes.TEXT,
       },
       deletedAt: {
         type: DataTypes.DATE,
@@ -78,10 +52,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Users',
-      tableName: 'users',
+      modelName: 'UserTodoLists',
+      tableName: 'user_todo_lists',
       paranoid: true,
     },
   );
-  return Users;
+  return UserTodoLists;
 };

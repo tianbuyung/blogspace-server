@@ -1,7 +1,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('user_todo_lists', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,36 +11,23 @@ module.exports = {
       user_id: {
         allowNull: false,
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        unique: true,
-      },
-      username: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        notNull: {
-          msg: 'Please enter your valid username',
+        references: {
+          model: 'users',
+          key: 'user_id',
+          as: 'userId',
         },
-        unique: true,
       },
-      email: {
+      todo: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         notNull: {
-          msg: 'Please enter your valid email',
+          msg: 'Please enter your valid todo',
         },
         validate: {
-          isEmail: true,
-        },
-        unique: true,
-      },
-      password: {
-        allowNull: false,
-        type: Sequelize.STRING(60),
-        notNull: {
-          msg: 'Please enter your valid password',
-        },
-        validate: {
-          is: /^\$2[ayb]\$.{56}$/i,
+          min: {
+            args: 5,
+            msg: 'Minimum 5 characters required in todo text',
+          },
         },
       },
       deleted_at: {
@@ -58,6 +45,6 @@ module.exports = {
   },
   // eslint-disable-next-line no-unused-vars
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('user_todo_lists');
   },
 };

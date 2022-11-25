@@ -55,7 +55,7 @@ class AuthService {
       err = {
         message:
           // eslint-disable-next-line max-len
-          'Password is weak: must contain min. 1 letter, 1 number, 1 symbol, 1 lowercase, 1 uppercase and lenght more than 8 characters',
+          'Password is weak: must contain min. 1 letter, 1 number, 1 symbol, 1 lowercase, 1 uppercase and length more than 8 characters',
       };
       return [err, null];
     }
