@@ -3,8 +3,9 @@ const express = require('express');
 const router = express.Router();
 const TodoListController = require('../controllers/todoListController');
 
-const todoListController = new TodoListController();
+const { getAllTodoListByUserId } = new TodoListController();
+const { requireSignIn } = require('../middleware/restrict');
 
-router.post('/', todoListController.getAllTodoListByUserId);
+router.get('/', requireSignIn, getAllTodoListByUserId);
 
 module.exports = router;

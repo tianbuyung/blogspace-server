@@ -5,7 +5,7 @@ const todoListService = new TodoListService();
 class TodoListController {
   async getAllTodoListByUserId(req, res) {
     try {
-      const { userId } = req.body;
+      const { userId } = req.user[1];
       const [error, todoList] = await todoListService.getAllTodoListByUserId(userId);
       if (error) {
         res.status(400).json({
