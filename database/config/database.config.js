@@ -19,10 +19,13 @@ module.exports = {
     dialect: 'postgres',
   },
   production: {
-    username: DATABASE_USERNAME || 'postgres',
-    password: DATABASE_PASSWORD || 'admin',
-    database: DATABASE_NAME || 'blogspace_prod',
-    host: DATABASE_HOST,
+    use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   },
 };
