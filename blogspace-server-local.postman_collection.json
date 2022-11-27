@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "f26b19f6-a057-413e-93f7-7b13741443d0",
+		"name": "blogspace-server local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17172090"
+	},
+	"item": [
+		{
+			"name": "Test Server",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000",
+					"host": [
+						"localhost"
+					],
+					"port": "8000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"yola\",\n    \"email\": \"yola@email.com\",\n    \"password\": \"Qwerty123!\",\n    \"confirmPassword\": \"Qwerty123!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"yola\",\n    \"password\": \"Qwerty123!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Todo List",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"todo\": \"test kedua yola nih!!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/todo-list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"todo-list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Todo List By User Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/todo-list",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"todo-list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Todo List By Id Copy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"todo\": \"test ketiga yola nih asoy!!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/todo-list/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"todo-list",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Todo List By Id Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/todo-list/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"todo-list",
+						"4"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjODExMjFmMi01Zjk2LTRlODYtOGVjNi05ZTc5MGQ0NzEzMWEiLCJpYXQiOjE2Njk1MjM4MDEsImV4cCI6MTY2OTUyNzQwMX0.u3KQjO75960y8VgVEBsWBEr9n4W1L_sXvq50gIYft9w",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
