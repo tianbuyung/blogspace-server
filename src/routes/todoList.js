@@ -3,10 +3,14 @@ const express = require('express');
 const router = express.Router();
 const TodoListController = require('../controllers/todoListController');
 
-const { getAllTodoListByUserId, createTodoList } = new TodoListController();
+// eslint-disable-next-line operator-linebreak
+const { getAllTodoListByUserId, createTodoList, editTodoListById, deleteTodoListById } =
+  new TodoListController();
 const { requireSignIn } = require('../middleware/restrict');
 
-router.get('/', requireSignIn, getAllTodoListByUserId);
 router.post('/', requireSignIn, createTodoList);
+router.get('/', requireSignIn, getAllTodoListByUserId);
+router.put('/:id', requireSignIn, editTodoListById);
+router.delete('/:id', requireSignIn, deleteTodoListById);
 
 module.exports = router;
